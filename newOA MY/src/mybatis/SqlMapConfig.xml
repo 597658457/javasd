@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "mybatis-3-config" "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+
+<configuration>
+
+	<!-- 数据库环境，可以支持很多环境，包括mysql oracle sql2005 -->
+	<environments default="e1">
+		<environment id="e1">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/itanyoadb?characterEncoding=UTF-8" />
+				<property name="username" value="root" />
+				<property name="password" value="root" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		
+		<mapper resource="com/newoa/mapper/ManMapper.xml"/>
+		<mapper resource="com/newoa/mapper/UserBaseMapper.xml"/>
+		<mapper resource="com/newoa/mapper/HolidayMapper.xml"/>
+	</mappers>
+	
+</configuration>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="newOA"
+  id="myeclipse.1474851840484"
+  context-root="/newOA"
+  j2ee-spec="5.0"
+  archive="newOA.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

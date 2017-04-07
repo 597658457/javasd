@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "mybatis-3-mapper" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.newoa.mapper.UserBaseMapper">
+
+<select id="login" resultType="com.newoa.pojo.UserBase">
+
+select * from userbase where 1=1
+<if test="id!=null">
+and id=#{id}
+</if>
+
+<if test="pwd!=null">
+and pwd=#{pwd}
+</if>
+
+<if test="roleid!=null">
+and roleid=#{roleid}
+</if>
+</select>
+
+<select id="getuser" resultType="com.newoa.pojo.UserBase">
+select * from userbase where id=#{id}
+</select>
+
+<resultMap type="com.newoa.pojo.UserBase" id="rm1">
+
+<result property="id" column="id"/>
+<result property="name" column="name"/>
+<result property="pwd" column="pwd"/>
+<result property="sex" column="sex"/>
+<result property="jobdate" column="jobdate"/>
+<result property="departmentid" column="departmentid"/>
+<result property="roleid" column="roleid"/>
+
+<association property="department" javaType="com.newoa.pojo.Department">
+<result property="desc" column="departmentid"/>
+</association>
+
+</resultMap>
+
+
+<select id="findAll" resultMap="rm1">
+
+SELECT a.id,a.name,a.sex,a.jobdate,b.desc AS departmentid
+FROM userbase a
+LEFT JOIN department b
+ON a.departmentid=b.id
+WHERE 1=1
+<if test="roleid!=null">
+and a.roleid=#{roleid}
+</if> 
+
+<if test="departmentid!=null">
+and a.departmentid=#{departmentid}
+</if> 
+</select>
+
+
+<insert id="addUser">
+
+insert into userbase values(#{id},#{name},#{pwd},#{sex},#{jobdate},#{departmentid},#{roleid})
+</insert>
+
+
+<delete id="deleteUser">
+delete from userbase where id=#{id}
+</delete>
+
+<update id="updateUser">
+update userbase set id=#{id},pwd=#{pwd},name=#{name},sex=#{sex},departmentid=#{departmentid},jobdate=#{jobdate} 
+where id=#{id}
+
+</update>
+
+
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "mybatis-3-mapper" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.newoa.mapper.HolidayMapper">
+
+<resultMap type="com.newoa.pojo.Holiday" id="rm2">
+
+<result property="id" column="id"/>
+<result property="desc" column="desc"/>
+<result property="statusid" column="statusid"/>
+<result property="starttime" column="starttime"/>
+<result property="endtime" column="endtime"/>
+<result property="userid" column="userid"/>
+
+<association property="status" javaType="com.newoa.pojo.Status">
+<result property="desc" column="statusid"/>
+</association>
+
+<association property="userbase" javaType="com.newoa.pojo.UserBase">
+<result property="name" column="username"/>
+</association>
+
+</resultMap>
+
+
+<select id="findHoliday" resultMap="rm2">
+
+SELECT a.id,a.desc,a.starttime,a.endtime,a.userid,b.desc AS statusid,c.name AS username
+FROM holiday a
+LEFT JOIN status b
+ON a.statusid=b.id
+left join userbase c
+on a.userid=c.id
+WHERE departmentid=#{departmentid}
+
+
+<if test="userid!=null">
+and a.userid=#{userid}
+</if>
+
+<if test="statusid!=null">
+and a.statusid=#{statusid}
+</if>
+
+</select>
+
+<insert id="applyHoliday">
+insert into holiday(`desc`,statusid,starttime,endtime,userid) values(#{desc},#{statusid},#{starttime},#{endtime},#{userid})
+
+</insert>
+
+<update id="agreeCheck">
+update holiday set statusid='6' where id=#{id}
+
+</update>
+
+<update id="disagreeCheck">
+update holiday set statusid='5' where id=#{id}
+
+</update>
+
+</mapper>
